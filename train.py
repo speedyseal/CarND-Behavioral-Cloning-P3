@@ -42,15 +42,22 @@ def loadImage(source_path, image_path):
 
 def loadImagesPd(df, image_path):
     it = df.itertuples(index=True)
-    img = loadImage(next(it)[1], image_path) # center image
+    firstrow = next(it)
+    img = loadImage(firstrow.center, image_path) # center image
+    if firstrow.flip:
+        img = cv2.flip(img, 1)
+
     images = np.zeros((df.shape[0], img.shape[0], img.shape[1], img.shape[2]), dtype=img.dtype)
     images[0] = img
     #images = [img]
     for i,row in enumerate(it):
-        img= loadImage(row[1], image_path)   # center image
+        img= loadImage(row.center, image_path)   # center image
+        if row.flip:
+            img = cv2.flip(img, 1)
         images[i+1] = img
     #    images.append(img)
-    return np.array(images)
+    # return np.array(images)
+    return images
         
 def plotimage(x):
     plt.imshow(x)
@@ -68,7 +75,9 @@ def nvidiaModel():
     model.add(Convolution2D(64, 3, 3, activation='relu'))
     model.add(Flatten())
     model.add(Dense(100, activation='relu'))
+    model.add(Dropout(0.5))
     model.add(Dense(50, activation='relu'))
+    model.add(Dropout(0.5))
     model.add(Dense(10, activation='relu'))
     model.add(Dense(1))
 
@@ -98,7 +107,9 @@ def train_gen(model, df, image_path, batch_size=32, epochs=5):
     history_object = model.fit_generator(generate_data(train, image_path, batch_size),
                                          samples_per_epoch=n_train, nb_epoch=epochs, 
                                          validation_data=generate_data(validation, image_path, batch_size),
-                                         nb_val_samples=validation.shape[0])
+                                         nb_val_samples=validation.shape[0],
+                                         pickle_safe=True,
+                                         nb_worker=4)
 
     ### print the keys contained in the history object
     print(history_object.history.keys())
