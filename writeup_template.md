@@ -103,7 +103,7 @@ To capture good driving behavior, I first recorded several laps on track one usi
 
 ![alt text][image2]
 
-I then recorded the vehicle recovering from the left side and right sides of the road back to center so that the vehicle would learn to steer towards the middle of the lane if it veered away from the center. These images show what a recovery looks like:
+I then recorded the vehicle recovering from the left side and right sides of the road back to center so that the vehicle would learn to steer towards the middle of the lane if it veered away from the center. I took a couple of examples throughout the track including examples from the bridge, in turns, and on the straight part of the track. These images show what a recovery looks like:
 
 ![alt text][image3]
 ![alt text][image4]
@@ -132,4 +132,6 @@ The generator takes a pandas dataframe, and loops over the data in the set. It f
 
 For each batch, it reads out the image path, and a flag to flip the image if specified. The generator reads the image using cv2, flipping the image as specified.
 
-Preprocessing is thus done inline in keras using the lambda layer to rescale the dynamic range to [-1,1], and crop the image between the hood of the car and the horizon.
+Because the generator is producing raw image data, preprocessing is thus done inline in keras using the lambda layer to rescale the dynamic range to [-1,1], and crop the image between the hood of the car and the horizon.
+
+At first my model was showing erratic behavior, which I hypothesized was due to bad training examples. I sifted through the capture data and deleted lines from the csv driving log to keep only clean driving examples. This allowed the model to drive around the track more smoothly and turn sharply and smoothly through the tight corners. I'm very impressed with its ability to turn around the sharp corners, which may even exceed my ability to do so on a consistent basis. It is impressive too that I can turn the car around and the model can drive the car smoothly around the corners in reverse and succesfully complete laps around the track.
