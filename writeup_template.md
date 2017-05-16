@@ -105,6 +105,13 @@ To capture good driving behavior, I first recorded several laps on track one usi
 
 I then recorded the vehicle recovering from the left side and right sides of the road back to center so that the vehicle would learn to steer towards the middle of the lane if it veered away from the center. I took a couple of examples throughout the track including examples from the bridge, in turns, and on the straight part of the track.
 
+![alt text][recovery1]
+
+![alt text][recovery2]
+
+![alt text][recovery3]
+
+
 I did not bother with track 2 because I can hardly drive it without going off track as a human. Without clean training data there is no hope for the model to learn how to drive track 2. I would like to revisit this in a future on a rainy day.
 
 I also drove the track a couple laps in the reverse direction and also included a lap of driving slowly through the turns to increase the number of frames in the tricky turn sections.
