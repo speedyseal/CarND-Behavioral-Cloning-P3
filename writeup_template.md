@@ -13,10 +13,10 @@ The goals / steps of this project are the following:
 
 [//]: # (Image References)
 
-[center]: ./examples/center_2017_05_03_06_14_22_042.jpg "Center of lane driving"
-[recovery1]: ./examples/recovery1.png "Recovery Image"
-[recovery2]: ./examples/recovery2.png "Recovery Image"
-[recovery3]: ./examples/recovery3.png "Recovery Image"
+[center]: ./examples/center_2017_05_03_06_17_10_291.jpg "Center of lane driving"
+[recovery1]: ./examples/center_2017_05_03_06_24_04_891.jpg "Recovery Image"
+[recovery2]: ./examples/center_2017_05_03_06_24_05_915.jpg "Recovery Image"
+[recovery3]: ./examples/center_2017_05_03_06_24_06_423.jpg "Recovery Image"
 [image]: ./examples/image.png "Normal Image"
 [flippedimage]: ./examples/flippedimage.png "Flipped Image"
 [cropped]: ./examples/cropped.png "Cropped Output"
@@ -97,6 +97,42 @@ At the end of the process, the vehicle is able to drive autonomously around the 
 The final model architecture (train.py lines 68-82) consisted of the nvidia convolution network model with scaling and a cropping layer appended to the front and dropout in the first two fully connected layers at the end. The final fully connected layer generates a single output scalar.
 
 
+```
+Layer (type)                     Output Shape          Param #     Connected to                     
+====================================================================================================
+lambda_2 (Lambda)                (None, 160, 320, 3)   0           lambda_input_2[0][0]             
+____________________________________________________________________________________________________
+cropping2d_2 (Cropping2D)        (None, 90, 320, 3)    0           lambda_2[0][0]                   
+____________________________________________________________________________________________________
+convolution2d_6 (Convolution2D)  (None, 43, 158, 24)   1824        cropping2d_2[0][0]               
+____________________________________________________________________________________________________
+convolution2d_7 (Convolution2D)  (None, 20, 77, 36)    21636       convolution2d_6[0][0]            
+____________________________________________________________________________________________________
+convolution2d_8 (Convolution2D)  (None, 8, 37, 48)     43248       convolution2d_7[0][0]            
+____________________________________________________________________________________________________
+convolution2d_9 (Convolution2D)  (None, 6, 35, 64)     27712       convolution2d_8[0][0]            
+____________________________________________________________________________________________________
+convolution2d_10 (Convolution2D) (None, 4, 33, 64)     36928       convolution2d_9[0][0]            
+____________________________________________________________________________________________________
+flatten_2 (Flatten)              (None, 8448)          0           convolution2d_10[0][0]           
+____________________________________________________________________________________________________
+dense_5 (Dense)                  (None, 100)           844900      flatten_2[0][0]                  
+____________________________________________________________________________________________________
+dropout_3 (Dropout)              (None, 100)           0           dense_5[0][0]                    
+____________________________________________________________________________________________________
+dense_6 (Dense)                  (None, 50)            5050        dropout_3[0][0]                  
+____________________________________________________________________________________________________
+dropout_4 (Dropout)              (None, 50)            0           dense_6[0][0]                    
+____________________________________________________________________________________________________
+dense_7 (Dense)                  (None, 10)            510         dropout_4[0][0]                  
+____________________________________________________________________________________________________
+dense_8 (Dense)                  (None, 1)             11          dense_7[0][0]                    
+====================================================================================================
+Total params: 981,819
+Trainable params: 981,819
+Non-trainable params: 0
+```
+
 #### 3. Creation of the Training Set & Training Process
 
 To capture good driving behavior, I first recorded several laps on track one using center lane driving. Here is an example image of center lane driving:
@@ -104,6 +140,13 @@ To capture good driving behavior, I first recorded several laps on track one usi
 ![alt text][center]
 
 I then recorded the vehicle recovering from the left side and right sides of the road back to center so that the vehicle would learn to steer towards the middle of the lane if it veered away from the center. I took a couple of examples throughout the track including examples from the bridge, in turns, and on the straight part of the track.
+
+![alt text][recovery1]
+
+![alt text][recovery2]
+
+![alt text][recovery3]
+
 
 I did not bother with track 2 because I can hardly drive it without going off track as a human. Without clean training data there is no hope for the model to learn how to drive track 2. I would like to revisit this in a future on a rainy day.
 
@@ -139,10 +182,10 @@ At first my model was showing erratic behavior, which I hypothesized was due to 
 The captures of the car camera while driving autonomously have been concatenated into a video and posted to YouTube. The links are shown here.
 
 Forward laps around track 1
-https://youtu.be/OBcutxptyAw
+[![Video forward](http://img.youtube.com/vi/OBcutxptyAw/0.jpg)](https://youtu.be/OBcutxptyAw)
 
 Reverse laps around track 1
-https://youtu.be/pBrzijOFV7Y
+[![Video reverse](http://img.youtube.com/vi/pBrzijOFV7Y/0.jpg)](https://youtu.be/pBrzijOFV7Y)
 
 While the driving could be improved, these examples are interesting because the recovery behavior of the controller is evident. As the car moves towards the edge of the road, the controller takes responsive action to steer the car back towards the center, albeit a bit too enthusiastically. The car stays on the road however, even at 30 mph. Choosing a lower speed shows more smooth driving behavior.
 
