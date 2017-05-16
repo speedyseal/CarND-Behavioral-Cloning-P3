@@ -13,10 +13,10 @@ The goals / steps of this project are the following:
 
 [//]: # (Image References)
 
-[center]: ./examples/center_2017_05_03_06_14_22_042.jpg "Center of lane driving"
-[recovery1]: ./examples/recovery1.png "Recovery Image"
-[recovery2]: ./examples/recovery2.png "Recovery Image"
-[recovery3]: ./examples/recovery3.png "Recovery Image"
+[center]: ./examples/center_2017_05_03_06_17_10_291.jpg "Center of lane driving"
+[recovery1]: ./examples/center_2017_05_03_06_24_04_891.jpg "Recovery Image"
+[recovery2]: ./examples/center_2017_05_03_06_24_05_915.jpg "Recovery Image"
+[recovery3]: ./examples/center_2017_05_03_06_24_06_423.jpg "Recovery Image"
 [image]: ./examples/image.png "Normal Image"
 [flippedimage]: ./examples/flippedimage.png "Flipped Image"
 [cropped]: ./examples/cropped.png "Cropped Output"
