@@ -182,10 +182,10 @@ At first my model was showing erratic behavior, which I hypothesized was due to 
 The captures of the car camera while driving autonomously have been concatenated into a video and posted to YouTube. The links are shown here.
 
 Forward laps around track 1
-https://youtu.be/OBcutxptyAw
+[![Video forward](http://img.youtube.com/vi/OBcutxptyAw/0.jpg)](https://youtu.be/OBcutxptyAw)
 
 Reverse laps around track 1
-https://youtu.be/pBrzijOFV7Y
+[![Video reverse](http://img.youtube.com/vi/pBrzijOFV7Y/0.jpg)](https://youtu.be/pBrzijOFV7Y)
 
 While the driving could be improved, these examples are interesting because the recovery behavior of the controller is evident. As the car moves towards the edge of the road, the controller takes responsive action to steer the car back towards the center, albeit a bit too enthusiastically. The car stays on the road however, even at 30 mph. Choosing a lower speed shows more smooth driving behavior.
 
