@@ -13,7 +13,7 @@ The goals / steps of this project are the following:
 
 [//]: # (Image References)
 
-[center]: ./examples/center.png "Center of lane driving"
+[center]: ./examples/center_2017_05_03_06_14_22_042.jpg "Center of lane driving"
 [recovery1]: ./examples/recovery1.png "Recovery Image"
 [recovery2]: ./examples/recovery2.png "Recovery Image"
 [recovery3]: ./examples/recovery3.png "Recovery Image"
@@ -103,11 +103,7 @@ To capture good driving behavior, I first recorded several laps on track one usi
 
 ![alt text][center]
 
-I then recorded the vehicle recovering from the left side and right sides of the road back to center so that the vehicle would learn to steer towards the middle of the lane if it veered away from the center. I took a couple of examples throughout the track including examples from the bridge, in turns, and on the straight part of the track. These images show what a recovery looks like:
-
-![alt text][recovery1]
-![alt text][recovery2]
-![alt text][recovery3]
+I then recorded the vehicle recovering from the left side and right sides of the road back to center so that the vehicle would learn to steer towards the middle of the lane if it veered away from the center. I took a couple of examples throughout the track including examples from the bridge, in turns, and on the straight part of the track.
 
 I did not bother with track 2 because I can hardly drive it without going off track as a human. Without clean training data there is no hope for the model to learn how to drive track 2. I would like to revisit this in a future on a rainy day.
 
@@ -138,3 +134,25 @@ Here is an example cropped image from the model.
 ![alt text][cropped]
 
 At first my model was showing erratic behavior, which I hypothesized was due to bad training examples. I sifted through the capture data and deleted lines from the csv driving log to keep only clean driving examples. This allowed the model to drive around the track more smoothly and turn sharply and smoothly through the tight corners. I'm very impressed with its ability to turn around the sharp corners, which may even exceed my ability to do so on a consistent basis. It is impressive too that I can turn the car around and the model can drive the car smoothly around the corners in reverse and succesfully complete laps around the track.
+
+#### 4. Analysis of driving videos and future work
+The captures of the car camera while driving autonomously have been concatenated into a video and posted to YouTube. The links are shown here.
+
+Forward laps around track 1
+https://youtu.be/OBcutxptyAw
+
+Reverse laps around track 1
+https://youtu.be/pBrzijOFV7Y
+
+While the driving could be improved, these examples are interesting because the recovery behavior of the controller is evident. As the car moves towards the edge of the road, the controller takes responsive action to steer the car back towards the center, albeit a bit too enthusiastically. The car stays on the road however, even at 30 mph. Choosing a lower speed shows more smooth driving behavior.
+
+The model in this project is a bit oversimplified. In reality steering angle needs to be speed dependent, creating different maps for steering behavior at high speeds and low speeds. The reason for this being that while high steering angles are perfectly acceptable and desirable in low speed situations such as making a right angle turn into a neighborhood street, they are not ok at high speeds, e.g. for highway driving, where sharp turns can unsettle a car's suspension.
+
+My recovery training examples were taken at low speed where I wanted to return to the center of the track as quickly as possible. Consequently, unleasing the controller at high speed causes erratic driving behavior because it is mapping the same images to high steering angle maneuvers, whereas one should gradually correct the course to the center of the track at high speeds.
+
+It is reasonable that the image of the upcoming road should map to speed as well. This is how good human drivers analyze the road and determine a safe speed. If you see a sharp bend coming up where the end of the road meets the side of the field of view, then you should hit the brake and slow down to safely maneuver the turn.
+
+Left for future work are to:
+* allow training of steering angle based on speed
+* produce accelerator and braking output in addition to steering angle for a more realistic controller
+* generalize the lane tracking to work on track 2 - which has a center lane marking in addition to different colored road edges
